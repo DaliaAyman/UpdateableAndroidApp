@@ -16,7 +16,9 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.android.dalia.updateableandroidapp.R;
+import com.android.dalia.updateableandroidapp.model.LocalDatabaseStrategy;
 import com.android.dalia.updateableandroidapp.model.dto.ItemModel;
+import com.android.dalia.updateableandroidapp.utils.ItemDataSourceViewModelFactory;
 import com.android.dalia.updateableandroidapp.view.adapters.RecyclerViewAdapter;
 import com.android.dalia.updateableandroidapp.view.base.AppCompatLifecycleActivity;
 import com.android.dalia.updateableandroidapp.viewmodel.ItemListViewModel;
@@ -60,9 +62,12 @@ public class MainActivity extends AppCompatLifecycleActivity implements View.OnL
                 linearLayoutManager.getOrientation()));
         recyclerView.setAdapter(recyclerViewAdapter);
 
-        viewModel = ViewModelProviders.of(this).get(ItemListViewModel.class);
+        ItemDataSourceViewModelFactory factory
+                = new ItemDataSourceViewModelFactory(new LocalDatabaseStrategy(this));
+        viewModel = ViewModelProviders.of(this, factory).get(ItemListViewModel.class);
 
-        viewModel.getItemAndPersonList().observe(MainActivity.this, new Observer<List<ItemModel>>() {
+        viewModel.getItemAndPersonList()
+                .observe(MainActivity.this, new Observer<List<ItemModel>>() {
             @Override
             public void onChanged(@Nullable List<ItemModel> itemModelList) {
                 recyclerViewAdapter.addItems(itemModelList);
@@ -81,7 +86,7 @@ public class MainActivity extends AppCompatLifecycleActivity implements View.OnL
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.request:
-
+                startActivity(new Intent(this, ViewRequestedActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

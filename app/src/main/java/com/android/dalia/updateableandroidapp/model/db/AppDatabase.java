@@ -5,6 +5,7 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
+import com.android.dalia.updateableandroidapp.model.DataSourceStrategy;
 import com.android.dalia.updateableandroidapp.model.dto.ItemModel;
 
 /**

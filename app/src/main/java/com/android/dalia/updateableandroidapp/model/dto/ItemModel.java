@@ -5,6 +5,8 @@ import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 
 import com.android.dalia.updateableandroidapp.model.db.DateConverter;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
@@ -16,11 +18,19 @@ import java.util.Date;
 public class ItemModel {
 
     @PrimaryKey(autoGenerate = true)
+    @SerializedName("id")
+    @Expose
     public int id;
+    @SerializedName("item")
+    @Expose
     private String itemName;
+    @SerializedName("person")
+    @Expose
     private String personName;
 
     @TypeConverters(DateConverter.class)
+    @SerializedName("date")
+    @Expose
     private Date borrowDate;
 
     public ItemModel(String itemName, String personName, Date borrowDate) {

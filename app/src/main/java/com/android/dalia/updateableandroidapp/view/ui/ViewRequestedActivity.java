@@ -9,7 +9,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.android.dalia.updateableandroidapp.R;
+import com.android.dalia.updateableandroidapp.model.APIDataStrategy;
+import com.android.dalia.updateableandroidapp.model.LocalDatabaseStrategy;
 import com.android.dalia.updateableandroidapp.model.dto.ItemModel;
+import com.android.dalia.updateableandroidapp.utils.ItemDataSourceViewModelFactory;
 import com.android.dalia.updateableandroidapp.view.adapters.RecyclerViewAdapter;
 import com.android.dalia.updateableandroidapp.view.base.AppCompatLifecycleActivity;
 import com.android.dalia.updateableandroidapp.viewmodel.ItemListViewModel;
@@ -43,7 +46,9 @@ public class ViewRequestedActivity extends AppCompatLifecycleActivity {
                 linearLayoutManager.getOrientation()));
         requestedRecyclerView.setAdapter(recyclerViewAdapter);
 
-        viewModel = ViewModelProviders.of(this).get(ItemListViewModel.class);
+        ItemDataSourceViewModelFactory factory
+                = new ItemDataSourceViewModelFactory(new APIDataStrategy());
+        viewModel = ViewModelProviders.of(this, factory).get(ItemListViewModel.class);
 
         viewModel.getItemAndPersonList().observe(ViewRequestedActivity.this, new Observer<List<ItemModel>>(){
             @Override

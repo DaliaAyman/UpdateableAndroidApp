@@ -12,7 +12,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 
 import com.android.dalia.updateableandroidapp.R;
+import com.android.dalia.updateableandroidapp.model.LocalDatabaseStrategy;
 import com.android.dalia.updateableandroidapp.model.dto.ItemModel;
+import com.android.dalia.updateableandroidapp.utils.ItemDataSourceViewModelFactory;
 import com.android.dalia.updateableandroidapp.viewmodel.ItemListViewModel;
 
 import java.text.SimpleDateFormat;
@@ -44,7 +46,10 @@ public class AddActivity extends LifecycleActivity {
         ButterKnife.bind(this);
 
         setDateButton.setText("Set Date");
-        viewModel = ViewModelProviders.of(this).get(ItemListViewModel.class);
+
+        ItemDataSourceViewModelFactory factory
+                = new ItemDataSourceViewModelFactory(new LocalDatabaseStrategy(this));
+        viewModel = ViewModelProviders.of(this, factory).get(ItemListViewModel.class);
 
         Log.d("Add", "calendar time: " + calendar.getTime());
         datePickerDialogListener = new DatePickerDialog.OnDateSetListener() {

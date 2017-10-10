@@ -3,8 +3,10 @@ package com.android.dalia.updateableandroidapp.viewmodel;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.ViewModel;
 import android.os.AsyncTask;
 
+import com.android.dalia.updateableandroidapp.model.DataSourceStrategy;
 import com.android.dalia.updateableandroidapp.model.db.AppDatabase;
 import com.android.dalia.updateableandroidapp.model.dto.ItemModel;
 
@@ -14,56 +16,27 @@ import java.util.List;
  * Created by Dalia on 9/28/2017.
  */
 
-public class ItemListViewModel extends AndroidViewModel {
-    private final LiveData<List<ItemModel>> itemAndPersonList;
+public class ItemListViewModel extends ViewModel {
+    private LiveData<List<ItemModel>> itemAndPersonList;
+    DataSourceStrategy dataSourceStrategy;
 
-    private AppDatabase appDatabase;
-
-    public ItemListViewModel(Application application) {
-        super(application);
-
-        appDatabase = AppDatabase.getDatabase(this.getApplication());
-
-        itemAndPersonList = appDatabase.itemAndPersonModel().getAllBorrowedItems();
+    public ItemListViewModel(DataSourceStrategy dataSourceStrategy) {
+        this.dataSourceStrategy = dataSourceStrategy;
     }
 
     public LiveData<List<ItemModel>> getItemAndPersonList() {
+        itemAndPersonList = dataSourceStrategy.getData();
+
         return itemAndPersonList;
     }
 
-    public void deleteItem(ItemModel itemModel){
-        new deleteAsyncTask(appDatabase).execute(itemModel);
-    }
-
     public void addItem(ItemModel itemModel){
-        new addAsyncTask(appDatabase).execute(itemModel);
+        dataSourceStrategy.addItem(itemModel);
     }
 
-    private static class deleteAsyncTask extends AsyncTask<ItemModel, Void, Void>{
-        private AppDatabase db;
-
-        public deleteAsyncTask(AppDatabase db) {
-            this.db = db;
-        }
-
-        @Override
-        protected Void doInBackground(ItemModel... params) {
-            db.itemAndPersonModel().deleteItem(params[0]);
-            return null;
-        }
+    public void deleteItem(ItemModel itemModel){
+        dataSourceStrategy.deleteItem(itemModel);
     }
 
-    private static class addAsyncTask extends AsyncTask<ItemModel, Void, Void>{
-        private AppDatabase db;
 
-        public addAsyncTask(AppDatabase db) {
-            this.db = db;
-        }
-
-        @Override
-        protected Void doInBackground(ItemModel... params) {
-            db.itemAndPersonModel().addItem(params[0]);
-            return null;
-        }
-    }
 }
