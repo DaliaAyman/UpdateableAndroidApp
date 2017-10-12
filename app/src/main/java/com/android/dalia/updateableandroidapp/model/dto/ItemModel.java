@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 
 /**
- * Created by xqbz7438 on 9/28/2017.
+ * Created by Dalia on 9/28/2017.
  */
 
 @Entity

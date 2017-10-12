@@ -5,6 +5,7 @@ import android.arch.lifecycle.LifecycleActivity;
 import android.arch.lifecycle.ViewModelProviders;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +16,7 @@ import com.android.dalia.updateableandroidapp.R;
 import com.android.dalia.updateableandroidapp.model.LocalDatabaseStrategy;
 import com.android.dalia.updateableandroidapp.model.dto.ItemModel;
 import com.android.dalia.updateableandroidapp.utils.ItemDataSourceViewModelFactory;
+import com.android.dalia.updateableandroidapp.view.base.BaseActivity;
 import com.android.dalia.updateableandroidapp.viewmodel.ItemListViewModel;
 
 import java.text.SimpleDateFormat;
@@ -24,7 +26,7 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AddActivity extends LifecycleActivity {
+public class AddActivity extends BaseActivity {
     private ItemListViewModel viewModel;
 
     @BindView(R.id.setDateButton)

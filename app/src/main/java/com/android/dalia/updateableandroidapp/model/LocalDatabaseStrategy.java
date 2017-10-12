@@ -21,11 +21,12 @@ public class LocalDatabaseStrategy  implements DataSourceStrategy{
     public LocalDatabaseStrategy(Context context) {
         appDatabase = AppDatabase.getDatabase(context);
 
-        listLiveData = appDatabase.itemAndPersonModel().getAllBorrowedItems();
     }
 
     @Override
     public LiveData<List<ItemModel>> getData() {
+        listLiveData = appDatabase.itemAndPersonModel().getAllBorrowedItems();
+
         return listLiveData;
     }
 

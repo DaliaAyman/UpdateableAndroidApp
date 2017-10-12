@@ -4,9 +4,12 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 
 import com.android.dalia.updateableandroidapp.R;
 import com.android.dalia.updateableandroidapp.model.APIDataStrategy;
@@ -14,7 +17,7 @@ import com.android.dalia.updateableandroidapp.model.LocalDatabaseStrategy;
 import com.android.dalia.updateableandroidapp.model.dto.ItemModel;
 import com.android.dalia.updateableandroidapp.utils.ItemDataSourceViewModelFactory;
 import com.android.dalia.updateableandroidapp.view.adapters.RecyclerViewAdapter;
-import com.android.dalia.updateableandroidapp.view.base.AppCompatLifecycleActivity;
+import com.android.dalia.updateableandroidapp.view.base.BaseActivity;
 import com.android.dalia.updateableandroidapp.viewmodel.ItemListViewModel;
 
 import java.util.ArrayList;
@@ -23,7 +26,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ViewRequestedActivity extends AppCompatLifecycleActivity {
+public class ViewRequestedActivity extends BaseActivity {
 
     @BindView(R.id.requestedListRecyclerView)
     RecyclerView requestedRecyclerView;
@@ -57,4 +60,15 @@ public class ViewRequestedActivity extends AppCompatLifecycleActivity {
             }
         });
     }
+
+    @Override
+    protected String setToolbarTitle() {
+        return getString(R.string.requested_title);
+    }
+
+    @Override
+    protected boolean useToolbar() {
+        return true;
+    }
+
 }

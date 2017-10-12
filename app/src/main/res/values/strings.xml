@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Android Updateable Sample</string>
+    <string name="empty_string" />
+    <string name="requested_title">Requested from API</string>
 </resources>
